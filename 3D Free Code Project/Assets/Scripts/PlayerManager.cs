@@ -7,7 +7,9 @@ public class PlayerManager : MonoBehaviour
     private float sanityChangeInterval;
 
     public float playerSanity;
+    public float lookDistance;
     public string playerState;
+    
     
     private GameObject playerCamera;
 
@@ -42,11 +44,23 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Sanity Changer
         time += Time.deltaTime;
         if (time >= sanityChangeInterval)
         {
             UpdateSanity();
             time -= sanityChangeInterval;
+        }
+
+        // Player Eyes
+        RaycastHit hit;
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, lookDistance))
+        {
+            Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * lookDistance, Color.green);
+        }
+        else
+        {
+            Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * lookDistance, Color.red);
         }
     }
 }
