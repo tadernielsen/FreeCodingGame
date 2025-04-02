@@ -36,19 +36,19 @@ public class PlayerManager : MonoBehaviour
     private void CalculateSanityChange()
     {
         int totalLevel = fearLevel - calmLevel;
-
         if (totalLevel > 0)
         {
-            sanityChanger = -(fearLevel^2)/3;
+            sanityChanger = -(2 * totalLevel)/(calmLevel + 1);
         }
         else if (totalLevel < 0)
         {
-            sanityChanger = (fearLevel^2)/10;
+            sanityChanger = totalLevel * 2/(fearLevel + 2);
         }
         else
         {
             sanityChanger = 0f;
         }
+        Debug.Log("Sanity Changer: " + sanityChanger);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -82,16 +82,14 @@ public class PlayerManager : MonoBehaviour
             {
                 VisibleObject visibleObject = hit.collider.gameObject.GetComponent<VisibleObject>();
                 fearLevel = visibleObject.fearLevel;
-                Debug.Log("Fear level " + fearLevel);
-            }
-            else
-            {
-                fearLevel = 0;
             }
         }
         else
         {
             Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * lookDistance, Color.red);
+
+            fearLevel = 0;
+            calmLevel = 0;
         }
         
         CalculateSanityChange();
