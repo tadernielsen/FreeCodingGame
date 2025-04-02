@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
         }
         else if (totalLevel < 0)
         {
-            sanityChanger = totalLevel * 2/(fearLevel + 2);
+            sanityChanger = -totalLevel * 2/(fearLevel + 2);
         }
         else
         {
@@ -81,7 +81,14 @@ public class PlayerManager : MonoBehaviour
             if (hit.collider.gameObject.CompareTag("SanityAffectingObject"))
             {
                 VisibleObject visibleObject = hit.collider.gameObject.GetComponent<VisibleObject>();
-                fearLevel = visibleObject.fearLevel;
+                if (visibleObject.isCalm)
+                {
+                    calmLevel = visibleObject.level;
+                }
+                else
+                {
+                    fearLevel = visibleObject.level;
+                }
             }
         }
         else
