@@ -1,4 +1,6 @@
 using System;
+using System.Data;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -6,8 +8,6 @@ public class PlayerManager : MonoBehaviour
     // Player Data Members
     private float sanityChanger;
     private float sanityChangeInterval;
-    private int fearLevel;
-    private int calmLevel;
 
     public float playerSanity;
     public float lookDistance;
@@ -33,9 +33,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void CalculateSanityChange()
+    private float CalculateSanityChange(int fearLevel, int calmLevel)
     {
         int totalLevel = fearLevel - calmLevel;
+        float sanityChanger = 0;
+
         if (totalLevel > 0)
         {
             sanityChanger = -(2 * totalLevel)/(calmLevel + 1);
@@ -44,11 +46,9 @@ public class PlayerManager : MonoBehaviour
         {
             sanityChanger = -totalLevel * 2/(fearLevel + 2);
         }
-        else
-        {
-            sanityChanger = 0f;
-        }
         Debug.Log("Sanity Changer: " + sanityChanger);
+
+        return sanityChanger;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -74,6 +74,8 @@ public class PlayerManager : MonoBehaviour
         }
 
         // Player Eyes
+        int fearLevel = 0, calmLevel = 0;
+
         RaycastHit hit;
         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, lookDistance) && !hit.collider.gameObject.CompareTag("Untagged"))
         {
@@ -94,11 +96,8 @@ public class PlayerManager : MonoBehaviour
         else
         {
             Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * lookDistance, Color.red);
-
-            fearLevel = 0;
-            calmLevel = 0;
         }
         
-        CalculateSanityChange();
+        sanityChanger = CalculateSanityChange(fearLevel, calmLevel);
     }
 }
