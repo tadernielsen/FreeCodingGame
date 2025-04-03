@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
     
     
     private GameObject playerCamera;
+    private GameObject playerHand;
 
     // Other Members
     float time;
@@ -60,6 +61,7 @@ public class PlayerManager : MonoBehaviour
         sanityChangeInterval = 1;
 
         playerCamera = GameObject.Find("Main Camera");
+        playerHand = GameObject.Find("Hand");
     }
 
     // Update is called once per frame
@@ -73,9 +75,9 @@ public class PlayerManager : MonoBehaviour
             time -= sanityChangeInterval;
         }
 
-        // Player Eyes
+        
         int fearLevel = 0, calmLevel = 0;
-
+        // Player Eyes
         RaycastHit hit;
         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, lookDistance) && !hit.collider.gameObject.CompareTag("Untagged"))
         {
@@ -96,6 +98,21 @@ public class PlayerManager : MonoBehaviour
         else
         {
             Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * lookDistance, Color.red);
+        }
+
+        // Player Hand
+        Transform holdingObject = playerHand.transform.GetChild(0);
+        if (holdingObject)
+        {
+            HoldingObject objectScript = holdingObject.GetComponent<HoldingObject>();
+            if (objectScript.isActive)
+            {
+                calmLevel = objectScript.calmLevel;
+            }
+            else
+            {
+                calmLevel = 0;
+            }
         }
         
         sanityChanger = CalculateSanityChange(fearLevel, calmLevel);
