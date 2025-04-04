@@ -51,20 +51,7 @@ public class PlayerManager : MonoBehaviour
         return sanityChanger;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
-    {
-        playerState = "Normal";
-        playerSanity = 75f;
-        sanityChanger = 0f;
-        sanityChangeInterval = 1;
-
-        playerCamera = GameObject.Find("Main Camera");
-        playerHand = GameObject.Find("Hand");
-    }
-
-    // Update is called once per frame
-    void Update()
+    private void FearUpdatingHelper()
     {
         int fearLevel = 0, calmLevel = 0;
         time += Time.deltaTime;
@@ -128,5 +115,23 @@ public class PlayerManager : MonoBehaviour
             UpdateSanity();
             time -= sanityChangeInterval;
         }
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        playerState = "Normal";
+        playerSanity = 75f;
+        sanityChanger = 0f;
+        sanityChangeInterval = 1;
+
+        playerCamera = GameObject.Find("Main Camera");
+        playerHand = GameObject.Find("Hand");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        FearUpdatingHelper();
     }
 }
