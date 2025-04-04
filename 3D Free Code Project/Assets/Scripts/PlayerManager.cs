@@ -17,6 +17,8 @@ public class PlayerManager : MonoBehaviour
     private GameObject playerCamera;
     private GameObject playerHand;
 
+    public Light[] lights;
+
     // Other Members
     float time;
 
@@ -105,6 +107,8 @@ public class PlayerManager : MonoBehaviour
                 objectScript.isActive = false;
             }
         }
+
+        calmLevel += FindLights(calmLevel);
         
         sanityChanger = CalculateSanityChange(fearLevel, calmLevel);
 
@@ -115,6 +119,33 @@ public class PlayerManager : MonoBehaviour
             UpdateSanity();
             time -= sanityChangeInterval;
         }
+    }
+
+    private int FindLights(int calmLevel = 0)
+    {
+         float lightLevel = 0;
+
+        foreach (Light lightSource in lights)
+        {
+
+            // Calculate distance and intensity
+            float distance = Vector3.Distance(lightSource.transform.position, transform.position);
+            float intensity = lightSource.intensity / (distance * distance);
+
+            // Add intensity to the total light level
+            lightLevel += intensity;
+        }
+
+        if (lightLevel > 1)
+        {
+            calmLevel = 1;
+        }
+        else
+        {
+            calmLevel = 0;
+        }
+
+        return calmLevel;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -133,5 +164,7 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         FearUpdatingHelper();
+
+        FindLights();
     }
 }
