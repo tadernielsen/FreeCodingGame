@@ -47,7 +47,6 @@ public class PlayerManager : MonoBehaviour
         {
             sanityChanger = -totalLevel * 2/(fearLevel + 2);
         }
-        Debug.Log("Sanity Changer: " + sanityChanger);
 
         return sanityChanger;
     }
@@ -67,16 +66,9 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Sanity Changer
-        time += Time.deltaTime;
-        if (time >= sanityChangeInterval)
-        {
-            UpdateSanity();
-            time -= sanityChangeInterval;
-        }
-
-        
         int fearLevel = 0, calmLevel = 0;
+        time += Time.deltaTime;
+
         // Player Eyes
         RaycastHit hit;
         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, lookDistance) && !hit.collider.gameObject.CompareTag("Untagged"))
@@ -113,8 +105,28 @@ public class PlayerManager : MonoBehaviour
             {
                 calmLevel = 0;
             }
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                if (time >= sanityChangeInterval)
+                {
+                    objectScript.useObject();
+                }
+            }
+            else
+            {
+                objectScript.isActive = false;
+            }
         }
         
         sanityChanger = CalculateSanityChange(fearLevel, calmLevel);
+
+        
+        // Sanity Changer
+        if (time >= sanityChangeInterval)
+        {
+            UpdateSanity();
+            time -= sanityChangeInterval;
+        }
     }
 }

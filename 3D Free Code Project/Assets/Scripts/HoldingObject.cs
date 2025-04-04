@@ -5,10 +5,15 @@ public class HoldingObject : MonoBehaviour
     public string objectName;
 
     public bool isActive;
-    private bool isOn;
 
     public int calmLevel;
     public int fuel;
+
+    void Start()
+    {
+        isActive = false;
+        fuel = 100;
+    }
 
     public void useObject()
     {
@@ -23,10 +28,5 @@ public class HoldingObject : MonoBehaviour
             isActive = false;
             Debug.Log("No fuel left!");
         }
-    }
-
-    public void toggleObject()
-    {
-
     }
 }
