@@ -121,7 +121,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private int FindLights(int calmLevel = 0)
+    private int FindLights(int calmLevel = 0, int fearLevel = 0)
     {
          float lightLevel = 0;
 
@@ -139,10 +139,12 @@ public class PlayerManager : MonoBehaviour
         if (lightLevel > 1)
         {
             calmLevel = 1;
+            fearLevel = 0;
         }
         else
         {
             calmLevel = 0;
+            fearLevel = 1;
         }
 
         return calmLevel;
@@ -164,7 +166,5 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         FearUpdatingHelper();
-
-        FindLights();
     }
 }

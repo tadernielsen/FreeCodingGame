@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private TextMeshPro sanityText;
+    private TextMeshProUGUI sanityText;
     private PlayerManager playerManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        sanityText = GameObject.Find("SanityCounter").GetComponent<TextMeshPro>();
+        sanityText = GameObject.Find("SanityCounter").GetComponent<TextMeshProUGUI>();
 
         playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
     }
