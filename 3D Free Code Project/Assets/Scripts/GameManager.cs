@@ -18,8 +18,18 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         float currentSanity = playerManager.playerSanity;
+        string sanityOr;
 
-        string sanityTextValue = "SANITY: " + currentSanity.ToString();
+        if (currentSanity > 20)
+        {
+            sanityOr = "SANITY: ";
+        }
+        else
+        {
+            sanityOr = "INSANITY: ";
+        }
+
+        string sanityTextValue = sanityOr + currentSanity.ToString();
         
         sanityText.text = sanityTextValue;
     }
