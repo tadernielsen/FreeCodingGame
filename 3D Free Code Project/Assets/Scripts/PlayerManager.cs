@@ -16,6 +16,7 @@ public class PlayerManager : MonoBehaviour
     
     private GameObject playerCamera;
     private GameObject playerHand;
+    private CameraShake cameraShake;
 
     public Light[] lights;
 
@@ -117,6 +118,23 @@ public class PlayerManager : MonoBehaviour
         if (time >= sanityChangeInterval)
         {
             UpdateSanity();
+
+            if (playerSanity > 20)
+            {
+                playerState = "Sane";
+            }
+            else if (playerSanity > 10)
+            {
+             
+                playerState = "Insane";
+                StartCoroutine(cameraShake.Shake(1f, 0.05f));
+            }
+            else
+            {
+                playerState = "Totaly Insane";
+                StartCoroutine(cameraShake.Shake(1f, 0.2f));
+            }
+
             time -= sanityChangeInterval;
         }
     }
@@ -160,6 +178,7 @@ public class PlayerManager : MonoBehaviour
 
         playerCamera = GameObject.Find("Main Camera");
         playerHand = GameObject.Find("Hand");
+        cameraShake = playerCamera.GetComponent<CameraShake>();
     }
 
     // Update is called once per frame
