@@ -104,7 +104,7 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                objectScript.isActive = false;
+                objectScript.stopObject();
             }
         }
 
