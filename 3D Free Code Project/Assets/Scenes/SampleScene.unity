@@ -332,6 +332,9 @@ MonoBehaviour:
   playerState: normal
   lights:
   - {fileID: 1502545274}
+  holdableObjects:
+  - {fileID: 1734194874}
+  - {fileID: 1091673889}
 --- !u!1 &167268688
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,9 +490,10 @@ GameObject:
   - component: {fileID: 632476883}
   - component: {fileID: 632476882}
   - component: {fileID: 632476881}
+  - component: {fileID: 632476885}
   m_Layer: 0
-  m_Name: Lantern
-  m_TagString: Untagged
+  m_Name: LanternGrab
+  m_TagString: Grabbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -583,6 +587,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -41.25, z: 0}
+--- !u!114 &632476885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632476880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac84fd2c5a8ccf141881fc8412fc7c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Lantern
+  isGrabbable: 1
+  fuel: 100
+  calmLevel: 0
 --- !u!1 &731921020
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,7 +924,7 @@ GameObject:
   - component: {fileID: 1091673891}
   m_Layer: 0
   m_Name: Flashlight
-  m_TagString: Untagged
+  m_TagString: HoldableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1829,11 +1849,11 @@ GameObject:
   - component: {fileID: 1734194879}
   m_Layer: 0
   m_Name: Lantern
-  m_TagString: Untagged
+  m_TagString: HoldableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1734194875
 Transform:
   m_ObjectHideFlags: 0

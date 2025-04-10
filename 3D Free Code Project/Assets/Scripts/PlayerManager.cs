@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     // Player Data Members
     private float sanityChanger;
     private float sanityChangeInterval;
+    private bool isHoldingObject = false;
 
     public float playerSanity;
     public float lookDistance;
@@ -19,6 +20,7 @@ public class PlayerManager : MonoBehaviour
     private CameraShake cameraShake;
 
     public Light[] lights;
+    public GameObject[] holdableObjects;
 
     // Other Members
     float time;
@@ -76,6 +78,25 @@ public class PlayerManager : MonoBehaviour
                     fearLevel = visibleObject.level;
                 }
             }
+            else if (hit.collider.gameObject.CompareTag("Grabbable") && Input.GetKeyDown(KeyCode.E))
+            {
+                PickUpObject pickUpObject = hit.collider.gameObject.GetComponent<PickUpObject>();
+
+                if (pickUpObject.isGrabbable)
+                {
+                    GameObject item = holdableObjects[0];
+                    Debug.Log("Picked up: " + item.name);
+                    item.SetActive(true);
+
+                    HoldingObject holdingObject = item.GetComponent<HoldingObject>();
+
+
+                    holdingObject.fuel = pickUpObject.fuel;
+                    holdingObject.calmLevel = pickUpObject.calmLevel;
+
+                    isHoldingObject = true;
+                }
+            }
         }
         else
         {
@@ -83,9 +104,9 @@ public class PlayerManager : MonoBehaviour
         }
 
         // Player Hand
-        Transform holdingObject = playerHand.transform.GetChild(0);
-        if (holdingObject)
+        if (isHoldingObject)
         {
+            Transform holdingObject = playerHand.transform.GetChild(0);
             HoldingObject objectScript = holdingObject.GetComponent<HoldingObject>();
             if (objectScript.isActive)
             {
