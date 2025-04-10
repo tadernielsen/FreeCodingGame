@@ -95,6 +95,7 @@ public class PlayerManager : MonoBehaviour
                     holdingObject.calmLevel = pickUpObject.calmLevel;
 
                     isHoldingObject = true;
+                    Destroy(hit.collider.gameObject);
                 }
             }
         }
